@@ -1,0 +1,98 @@
+=== PAGE 1 ===
+Legal Metrology (Packaged Commodities) Rules, 2011
+Extracted key rules for compliance rule-engine development — SIH26034 | Source: Gazette of India, GSR
+202(E), 7 March 2011
+1. Key Definitions (Rule 2)
+Manufacturer: A person/firm who produces, makes or manufactures the commodity, or puts a mark claiming it was
+made by them.
+Packer: A person/firm who pre-packs any commodity in a bottle, tin, wrapper or otherwise, in units suitable for sale.
+Net quantity: The quantity by weight, measure or number of commodity contained in a package, EXCLUDING the
+packaging/wrapper.
+Retail sale price (MRP): The maximum price at which the commodity may be sold to the consumer. Must be printed
+as: 'Maximum or Max. retail price Rs.../inclusive of all taxes' or 'MRP Rs.../incl. of all taxes'.
+Retail package: Packages intended for retail sale to the ultimate consumer. Does NOT include industrial or
+institutional consumers.
+Principal display panel: The surface area of the package where all required declarations are grouped and displayed.
+2. Applicability (Rule 3)
+Chapter II (retail package rules) does NOT apply to: (a) packages containing more than 25 kg or 25 litre (except
+cement/fertilizer sold in bags up to 50 kg); (b) packages meant for industrial or institutional consumers (e.g. hotels,
+hospitals, airlines buying directly from manufacturer for own use).
+3. Mandatory Declarations on Every Package (Rule 6)
+Every retail package must bear the following declarations, clearly and conspicuously:
+# Field Requirement
+a Manufacturer/Packer/
+Importer name & address
+Name and complete address required. If manufacturer ≠ packer, both names/addresses needed. For imported packages, importer's name/address also needed. EXCEPTION: for food articles, this rule is replaced by Prevention of Food Adulteration Act, 1954 requirements instead.
+b Common/generic name Plain name of the commodity. If package has more than one product, each product's name and quantity must be mentioned.
+c Net quantity In standard unit of weight/measure, or number if sold by count.
+d Month & year of
+manufacture/packing/import
+Required, with some exceptions (bidis, incense sticks, certain LPG cylinders don't need this). For food articles, governed by Prevention of Food Adulteration Act instead.
+e Retail sale price (MRP) Must show 'Maximum/Max retail price Rs..../inclusive of all taxes' format. Exception: bidis and certain LPG cylinders don't need this declared.
+f Dimensions Required only where size of the commodity is relevant (e.g. bedsheets, fabric).
+g Consumer care details Name, address, telephone number, and email (if available) of contact for consumer complaints — required on every package (Rule 6(2)).
+Important sub-rules: No individual stickers allowed to alter/make declarations (except MRP reduction stickers). Where a
+name/address appears without 'manufactured by' or 'packed by' qualifier, it is presumed to be the manufacturer. If a brand owner's
+name/address appears as marketer, the brand owner is held responsible for violations.
+=== PAGE 2 ===
+4. Principal Display Panel — Font Size Rules (Rule 7)
+The height of letters in any declaration shall NOT be less than 1mm (normal case), or 2mm when blown, formed,
+molded, embossed or perforated on the container. Width of letter/numeral shall not be less than one-third of its height
+(except numeral '1' and letters i, I, l).
+Table I — Minimum numeral height by net quantity (weight/volume):
+Net Quantity Normal Case (mm) Blown/Embossed (mm)
+Up to 200g/ml 1 2
+Above 200g/ml up to 500g/ml 2 4
+Above 500g/ml 4 6
+Table II — Minimum numeral height by net quantity (length/area/number):
+Net Quantity / Panel Area Normal Case (mm) Blown/Embossed (mm)
+Up to 100 cm2 1 2
+Above 100 up to 500 cm2 2 4
+Above 500 up to 2500 cm2 4 6
+Above 2500 cm2 6 6
+5. Manner of Declaration (Rule 9)
+• Every declaration must be legible and prominent.
+• Numerals of retail sale price and net quantity must be printed/painted/inscribed in a colour that CONTRASTS with the
+label background.
+• Exception: if label info is blown/formed/molded on glass or plastic, contrasting colour is not required.
+• Hand-written/hand-script declarations must be clear, unambiguous and legible.
+• No declaration shall require reading through any liquid commodity in the package.
+• Declarations must be in Hindi (Devanagari script) or English (other languages may be added in addition).
+6. Declaration Placement (Rule 8)
+All declarations must appear on the principal display panel. The area surrounding the quantity declaration must be free
+from other printed information — clear space above/below equal to at least the height of the numeral, and clear space
+left/right equal to at least twice the height of the numeral.
+=== PAGE 3 ===
+7. Quantity Declaration Rules (Rules 11-13)
+• Net quantity excludes weight of wrappers/packaging materials (Rule 11(1)).
+• Quantity declaration must NOT use vague/misleading words: 'minimum', 'not less than', 'average', 'about',
+'approximately' or similar (Rule 12(6)).
+• No 'dozen', 'score', 'gross', 'great gross' style counting allowed on packages (Rule 13(4)).
+• Only SI (International System) units allowed for net quantity (Rule 13(5)).
+• Items sold by number must use symbol 'N' or 'U'.
+• Units: below 1kg use grams; below 1 litre use millilitres; below 1 metre use centimetres, etc. (Rule 13(2)).
+8. Standard Package Sizes Relevant to Your Test Products (Second
+Schedule)
+Commodity Standard Quantities
+Biscuits 25g, 50g, 75g, 100g, 150g, 200g, 250g, 300g, then multiples of 100g up to 1kg
+Laundry Soap 50g, 75g, 100g, then multiples of 50g
+Toilet/Bath Soap 25g, 50g, 75g, 100g, 125g, 150g, then multiples of 50g
+Non-soapy detergent cakes/bars 50g, 75g, 100g, 125g, 150g, 200g, 250g, 300g, then multiples of 100g
+Note: If a commodity in the Second Schedule is packed in a non-standard size, the label must prominently state 'Not a standard
+pack size under the Legal Metrology (Packaged Commodities) Rules, 2011'.
+9. 'When Packed' Exemption (Third Schedule)
+The following commodities may qualify their net quantity declaration with 'when packed' (accounting for natural weight
+loss over time): (1) All kinds of soaps, (2) Lotions, (3) Cream (other than cream of milk).
+10. Food Article Exception
+For packages containing food articles: manufacturer/packer name-address declaration (Rule 6(1)(a)) and month/year
+of manufacture (Rule 6(1)(d)) are governed instead by the Prevention of Food Adulteration Act, 1954 and its rules,
+NOT by this Rule directly. Net quantity, MRP, and consumer care rules still apply as normal. This is relevant for testing
+on your Lays packet sample.
+11. Maximum Permissible Error (First Schedule)
+Packages are allowed a small margin of error between declared and actual net quantity. Examples: up to 50g/ml allows
+9% error; 100-200g/ml allows 4.5% error; 500-1000g/ml allows 15g/ml error; above 15000g/ml allows 1.0% error. This
+is mainly relevant for physical weight-testing, not label/OCR compliance checking.
+12. Penalties (Rule 32)
+=== PAGE 4 ===
+Contravention of registration/advertisement rules (Rules 27-31): fine up to Rs. 4,000. Contravention of any other
+provision with no specified punishment: fine up to Rs. 2,000.

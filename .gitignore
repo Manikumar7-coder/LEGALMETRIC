@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.env
+
+# Build outputs
+dist/
+build/
+.expo/
+*.log
+
+# SQLite database
+*.db
+*.sqlite3
+
+# Uploads & generated reports (keep structure)
+safemetric/backend/uploads/*
+!safemetric/backend/uploads/.gitkeep
+safemetric/backend/reports/*
+!safemetric/backend/reports/.gitkeep
+
+# IDE files
+.vscode/
+.idea/
+.DS_Store
