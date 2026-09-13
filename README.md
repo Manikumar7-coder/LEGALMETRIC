@@ -164,6 +164,8 @@ source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
+# (Optional) Install testing & dev dependencies
+pip install -r requirements-dev.txt
 
 # Run backend development server
 python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
@@ -289,6 +291,9 @@ The backend includes six automated verification test suites covering statutory c
 
 ```bash
 cd backend
+
+# Install test runner & client dependencies (pytest, httpx)
+pip install -r requirements-dev.txt
 
 # 1. Verify 21 statutory rules in Knowledge Base
 python test_rules_knowledge_base.py

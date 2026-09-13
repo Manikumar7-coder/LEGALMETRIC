@@ -24,6 +24,12 @@ backend/reports/*
 reports/*
 !reports/.gitkeep
 
+# Auto-generated preprocessing output
+backend/demo_samples/*_preprocessed.png
+
+# Temp files
+full_diff.txt
+
 # IDE files
 .vscode/
 .idea/

@@ -134,13 +134,23 @@ class ImagePreprocessor:
         edges = cv2.Canny(gray, 50, 150, apertureSize=3)
         lines = cv2.HoughLinesP(edges, 1, np.pi / 180, threshold=100, minLineLength=80, maxLineGap=10)
 
-        if lines is None:
+        if lines is None or len(lines) == 0:
+            return 0.0
+
+        try:
+            reshaped_lines = np.asarray(lines).reshape(-1, 4)
+        except Exception:
             return 0.0
 
         angles = []
-        for line in lines:
-            x1, y1, x2, y2 = line[0]
-            angle = np.degrees(np.arctan2(y2 - y1, x2 - x1))
+        for x1, y1, x2, y2 in reshaped_lines:
+            if x1 > x2:
+                x1, y1, x2, y2 = x2, y2, x1, y1
+            dx = float(x2 - x1)
+            dy = float(y2 - y1)
+            if dx == 0.0 and dy == 0.0:
+                continue
+            angle = float(np.degrees(np.arctan2(dy, dx)))
             if -45.0 <= angle <= 45.0:
                 angles.append(angle)
 
