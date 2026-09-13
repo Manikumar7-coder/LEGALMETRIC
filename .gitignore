@@ -17,10 +17,12 @@ build/
 *.sqlite3
 
 # Uploads & generated reports (keep structure)
-safemetric/backend/uploads/*
-!safemetric/backend/uploads/.gitkeep
-safemetric/backend/reports/*
-!safemetric/backend/reports/.gitkeep
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/reports/*
+!backend/reports/.gitkeep
+reports/*
+!reports/.gitkeep
 
 # IDE files
 .vscode/
