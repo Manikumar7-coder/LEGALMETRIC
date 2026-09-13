@@ -4,7 +4,7 @@
 
 > Scan. Validate. Trust.
 
-![SafeMetric — AI-Powered Legal Metrology Compliance](web/public/shield-check.svg)
+![SafeMetric — AI-Powered Legal Metrology Compliance](assets/readme/shiled_check.png)
 
 SafeMetric is an AI-powered regulatory compliance system designed to assist inspection workflows for packaged commodity label declarations using OCR, computer vision, statutory rule validation, and structured reporting.
 
