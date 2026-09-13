@@ -1,21 +1,48 @@
-# SafeMetric – AI Powered Legal Metrology Compliance System
+# 🛡️ SafeMetric
+
+## AI-Powered Legal Metrology Compliance System
+
+> Scan. Validate. Trust.
+
+![SafeMetric — AI-Powered Legal Metrology Compliance](web/public/shield-check.svg)
+
+SafeMetric is an AI-powered regulatory compliance system designed to assist inspection workflows for packaged commodity label declarations using OCR, computer vision, statutory rule validation, and structured reporting.
+
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110%2B-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![React Native](https://img.shields.io/badge/React%20Native-Expo-61DAFB?logo=react&logoColor=black)](https://reactnative.dev/)
+[![Expo](https://img.shields.io/badge/Expo-Managed-000020?logo=expo&logoColor=white)](https://expo.dev/)
+[![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 
 > **Team Name:** SAFE METRIC  
 > **Tagline:** Scan. Validate. Trust.  
 > **Statutory Basis:** Legal Metrology Act, 2009 & Legal Metrology (Packaged Commodities) Rules, 2011 (G.S.R. 202(E))  
 > **Architecture Reference:** See [ARCHITECTURE.md](ARCHITECTURE.md) for full technical design, pipeline diagrams, and statutory matrices.
 
+## 📚 Contents
+
+- [Overview](#overview)
+- [Problem](#problem)
+- [Solution](#solution)
+- [How It Works](#-how-safemetric-works)
+- [Key Features](#-key-features)
+- [Application Preview](#-application-preview)
+- [System Architecture](#-system-architecture)
+- [Compliance & Statutory Capabilities](#-compliance--statutory-capabilities)
+- [Tech Stack](#-tech-stack)
+- [Project Structure](#-project-structure)
+- [Setup](#-setup)
+- [Demo Accounts](#-demo-accounts--rbac-roles)
+- [SIH Judge Demo](#-sih-judge-demo--under-3-minutes)
+- [Future Enhancements](#-future-enhancements)
+- [Disclaimer](#-disclaimer)
+
 ---
 
-## 1. System Overview
+## Overview
 
-**SafeMetric** is an enterprise-grade AI-powered regulatory compliance system built for enforcement officers, inspectors, and supervisors under the Department of Consumer Affairs. It automates the optical inspection of packaged commodities by capturing or uploading product labels, extracting declarations using OpenCV computer vision and RapidOCR/PaddleOCR, validating declarations against 21 statutory Legal Metrology rules, detecting infractions, generating multi-format export certificates (PDF, DOCX, CSV), and maintaining an auditable inspection history with Role-Based Access Control (RBAC).
-
-### Key Statutory Capabilities (SIH26034 Compliance)
-1. **Rule 7 Font Size & Readability Analysis**: Calculates physical character height in millimeters from OCR bounding polygons using either user-calibrated dimensions (confidence: 0.95) or statistical packaging tier heuristics (confidence: 0.60). Audits compliance against Rule 7(1)-(3) Tables I & II (area-dependent minimum character heights).
-2. **Rule 8 Declaration Placement & Clear Space**: Evaluates Principal Display Panel (PDP) spatial clustering for core declarations (net quantity, MRP, manufacturer, consumer care, date) and verifies statutory clear space surrounding the net quantity numeral (1x character height vertically, 2x character height horizontally) under Rule 8(1) Proviso.
-3. **Multi-Format Statutory Report Exporter**: Produces immutable publication-grade PDF certificates via ReportLab, editable Microsoft Word (`.docx`) statutory inspection notices with officer sign-off blocks via `python-docx`, and flat tabular CSV audit records.
-4. **Hierarchical Role-Based Access Control (RBAC)**: Secure access tiering (`Admin` > `Supervisor` > `Inspector`). Enforces department-wide analytics visibility for supervisors/admins, restricts record deletion and user role management to administrators, and scopes field inspectors to their own inspections.
+**SafeMetric** is an enterprise-grade AI-powered regulatory compliance system built for enforcement officers, inspectors, and supervisors under the Department of Consumer Affairs. It automates the optical inspection of packaged commodities by capturing or uploading product labels, extracting declarations using OpenCV computer vision and OCR, validating declarations against 21 statutory Legal Metrology rules, detecting infractions, generating multi-format export certificates (PDF, DOCX, CSV), and maintaining an auditable inspection history with Role-Based Access Control (RBAC).
 
 ### Core Product Principle & Terminology Mandate
 > [!IMPORTANT]
@@ -32,230 +59,136 @@
 >
 > *Prohibited Phrasing:* "Product is safe", "Guaranteed safe". The system provides automated compliance assistance; final regulatory determination remains subject to physical inspection by an authorized officer.
 
----
+## 🚀 At a Glance
 
-## 2. Architecture & Tech Stack
+| Capability | Description |
+|---|---|
+| 🔍 OCR | Extract declarations from package labels |
+| ⚖️ Compliance | Evaluate configured Legal Metrology rules |
+| 📐 Rule 7 | Font size/readability analysis |
+| 📍 Rule 8 | Declaration placement/clear-space analysis |
+| 📊 Analytics | Inspection and compliance insights |
+| 📄 Reports | PDF, DOCX and CSV exports |
+| 👮 RBAC | Admin, Supervisor and Inspector roles |
+| 📱 Mobile | React Native + Expo inspection workflow |
 
-SafeMetric consists of **two unified client applications** powered by a single shared FastAPI backend. Detailed subsystem architecture and data flow diagrams are available in [ARCHITECTURE.md](ARCHITECTURE.md).
+## Problem
 
-```
-                  ┌────────────────────────────────────────┐
-                  │          WEB APPLICATION               │
-                  │   React 18 + Vite + Lucide Icons       │
-                  └───────────────────┬────────────────────┘
-                                      │
-                                      ▼  REST API (JSON)
-┌─────────────────────────────────────┴─────────────────────────────────────┐
-│                       FASTAPI SHARED BACKEND                              │
-│  • Pydantic Schemas  • SQLAlchemy ORM  • SQLite (PostgreSQL Ready)        │
-│  • OpenCV Vision Preprocessing (CLAHE, Bilateral Denoising, Otsu)         │
-│  • RapidOCR / PaddleOCR Text Engine & Polygon Bounding Box Extractor      │
-│  • FontAnalysisEngine (Rule 7 Character Height in mm & Tables I/II)       │
-│  • PlacementChecker (Rule 8 PDP Grouping & Net Qty Clear Space Zone)      │
-│  • Legal Metrology Compliance Engine (21 Statutory Rules Evaluator)       │
-│  • ReportLab PDF + python-docx DOCX + Tabular CSV Exporters               │
-│  • Hierarchical RBAC (Admin, Supervisor, Inspector)                       │
-└─────────────────────────────────────┬─────────────────────────────────────┘
-                                      ▲  REST API (JSON)
-                                      │
-                  ┌───────────────────┴────────────────────┐
-                  │          MOBILE APPLICATION            │
-                  │ React Native + Expo (Camera First)     │
-                  └────────────────────────────────────────┘
-```
+Packaging declarations are often inconsistent, difficult to verify manually, and subject to legal scrutiny under the Legal Metrology Act and rules. Inspectors need an auditable, repeatable way to assess declarations on product labels without relying on manual reading alone.
 
----
+## Solution
 
-## 3. Directory Layout
+SafeMetric combines image capture, OCR extraction, spatial analysis, statutory rule validation, and role-aware reporting into a single inspection workflow. It supports both web and mobile inspection workflows while preserving a documented evidentiary trail for compliance decisions.
 
-```
-safemetric/
-├── ARCHITECTURE.md                  # Comprehensive technical & statutory architecture
-├── README.md                        # Project overview, quickstart & run guide
-│
-├── backend/
-│   ├── app/
-│   │   ├── main.py                  # FastAPI app entrypoint, lifespan & static mounts
-│   │   ├── database.py              # SQLite / SQLAlchemy connection
-│   │   ├── demo_seeder.py           # Pre-seeds rules, demo officers (Admin/Supervisor/Inspector)
-│   │   ├── models/                  # User, Inspection, InspectionField, Rule, Report
-│   │   ├── schemas/                 # Pydantic validation schemas
-│   │   ├── routers/
-│   │   │   ├── auth.py              # Authentication (login, register)
-│   │   │   ├── users.py             # Admin-only user management & role assignment
-│   │   │   ├── inspections.py       # Inspection upload, analyze, list, delete
-│   │   │   ├── dashboard.py         # Department & personal analytics KPIs
-│   │   │   ├── reports.py           # Multi-format report download (PDF, DOCX, CSV)
-│   │   │   ├── profile.py           # User profile management
-│   │   │   └── rules.py             # Knowledge base & statutory rules catalog
-│   │   ├── services/
-│   │   │   ├── quality_service.py   # Blur, glare, and resolution assessment
-│   │   │   └── inspection_service.py# Inspection pipeline orchestrator
-│   │   ├── auth/                    # bcrypt security, JWT handlers & RBAC dependencies
-│   │   ├── ocr/                     # OpenCV preprocessing & OCR text extractor
-│   │   ├── extraction/
-│   │   │   ├── field_extractor.py   # Statutory declaration parser (12 fields)
-│   │   │   ├── normalizer.py        # Unit and value normalization
-│   │   │   ├── font_analysis.py     # Rule 7 character height & Table I/II analysis
-│   │   │   └── placement_checker.py # Rule 8 PDP clustering & clear space analysis
-│   │   ├── rules/
-│   │   │   ├── knowledge_base.py    # 21 statutory rules catalog with legal citations
-│   │   │   └── compliance_engine.py # Rule evaluator (PASS, FAIL, NEEDS_REVIEW, NOT_APPLICABLE)
-│   │   └── reports/
-│   │       ├── pdf_generator.py     # ReportLab publication-grade PDF generator
-│   │       └── report_exporter.py   # DOCX and CSV report exporters
-│   ├── uploads/                     # Uploaded label images
-│   ├── reports/                     # Generated PDF/DOCX/CSV reports
-│   ├── demo_samples/                # Pre-rendered benchmark label images
-│   ├── requirements.txt             # Python dependencies
-│   ├── test_rules_knowledge_base.py # Statutory rules catalog test
-│   ├── test_compliance_engine.py    # Compliance evaluation engine test
-│   ├── test_font_analysis.py        # Rule 7 character height & font analysis test
-│   ├── test_placement_checker.py    # Rule 8 PDP & clear space test
-│   ├── test_report_exporter.py      # DOCX & CSV report export test
-│   └── test_rbac.py                 # Role-based access control test
-│
-├── web/
-│   ├── src/
-│   │   ├── components/              # Sidebar, Header, EvidenceViewer, ProtectedRoute
-│   │   ├── pages/
-│   │   │   ├── Dashboard.jsx        # KPI metrics, category chart, recent audit logs
-│   │   │   ├── Scan.jsx             # Camera/file intake with dimension calibration
-│   │   │   ├── Result.jsx           # Audit breakdown, font analysis, placement check, export
-│   │   │   ├── History.jsx          # Auditable history with search and RBAC actions
-│   │   │   ├── Reports.jsx          # Multi-format report download center
-│   │   │   ├── Users.jsx            # Admin-only user management & role control
-│   │   │   ├── Profile.jsx          # Officer profile settings
-│   │   │   └── Login.jsx            # Authentication with 1-click demo accounts
-│   │   ├── context/                 # AuthContext with role helpers (isAdmin, isSupervisor)
-│   │   ├── services/api.js          # Axios client with multi-format download & user API
-│   │   └── App.jsx                  # Route definitions
-│   ├── package.json
-│   └── vite.config.js
-│
-└── mobile/
-    ├── src/
-    │   ├── screens/                 # Dashboard, Scan, Result, History, Reports, Profile
-    │   ├── navigation/              # AppNavigator & TabNavigator
-    │   ├── services/api.js          # Native API client with format selector
-    │   └── context/AuthContext.js   # Mobile AuthContext
-    ├── App.js                       # Mobile root
-    ├── app.json                     # Expo configuration
-    └── package.json
+## 🔄 How SafeMetric Works
+
+```text
+📷 CAPTURE / UPLOAD
+      ↓
+🔍 OCR & EXTRACTION
+      ↓
+🧠 DECLARATION ANALYSIS
+      ↓
+⚖️ STATUTORY RULE VALIDATION
+      ↓
+🚨 VIOLATION DETECTION
+      ↓
+📊 COMPLIANCE ASSESSMENT
+      ↓
+📄 INSPECTION REPORT
 ```
 
+## ✨ Key Features
+
+### 🔍 Intelligent Label Inspection
+Image-based package label inspection and OCR extraction for field officers and supervisors.
+
+### ⚖️ Statutory Rule Validation
+Evaluation against the configured Legal Metrology rule catalog, with rule-specific severity and reporting.
+
+### 📐 Rule 7 Analysis
+Font-size and readability analysis using the existing implementation and physical measurement logic.
+
+### 📍 Rule 8 Analysis
+Declaration placement and clear-space analysis for the Principal Display Panel and net quantity zone.
+
+### 📄 Multi-Format Reports
+PDF, DOCX and CSV export capabilities for statutory records and audit workflows.
+
+### 👮 Role-Based Access Control
+Admin → Supervisor → Inspector hierarchy with scoped visibility and protected administrative actions.
+
+### 🧾 Evidence & Audit Trail
+Inspection records retain evidence, analysis details, and report outputs for review and accountability.
+
+## 📸 Application Preview
+
+Explore the key interfaces of SafeMetric, from the landing experience
+and inspection workflow to compliance results and multi-page reporting.
+
+### 🏠 Landing Page
+
+![SafeMetric Landing Page](assets/readme/landingpage.png)
+
+*SafeMetric landing page introducing the AI-powered Legal Metrology
+compliance platform.*
+
 ---
 
-## 4. Run Commands
+### 📊 Enforcement Dashboard
 
-### 1. Shared Backend (FastAPI)
+![SafeMetric Dashboard](assets/readme/dashboard.png)
 
-```bash
-# Navigate to backend folder
-cd backend
+*Dashboard providing inspection statistics, compliance insights,
+violations and recent inspection activity.*
 
-# (Optional) Create and activate virtual environment
-python -m venv venv
+---
 
-# Windows:
-venv\Scripts\activate
-# Linux/macOS:
-source venv/bin/activate
+### 🔍 New Inspection
 
-# Install dependencies
-pip install -r requirements.txt
-# (Optional) Install testing & dev dependencies
-pip install -r requirements-dev.txt
+![SafeMetric New Inspection](assets/readme/inspection.png)
 
-# Run backend development server
-python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+*Inspection workflow for uploading or capturing a packaged commodity
+label and initiating compliance analysis.*
+
+---
+
+### 📄 Inspection Reports
+
+The report interface/output spans multiple pages, so use all three
+report screenshots together.
+
+![SafeMetric Report — Page 1](assets/readme/report1.png)
+
+![SafeMetric Report — Page 2](assets/readme/report2.png)
+
+![SafeMetric Report — Page 3](assets/readme/report3.png)
+
+*Multi-page statutory inspection report generated by SafeMetric.*
+
+## 🏗️ System Architecture
+
+SafeMetric consists of two unified client applications powered by a single shared FastAPI backend.
+
+```mermaid
+flowchart TD
+    A[Web Application] --> B[FastAPI REST API]
+    C[Mobile Application] --> B
+    B --> D[OCR / Image Processing]
+    D --> E[Extraction / Normalization]
+    E --> F[Legal Metrology Compliance Engine]
+    F --> G[Database / Reports]
 ```
-*Backend API Docs (Swagger):* `http://127.0.0.1:8000/docs`
 
----
+## ⚖️ Compliance & Statutory Capabilities
 
-### 2. Web Application (React + Vite)
+### Key Statutory Capabilities (SIH26034 Compliance)
+1. **Rule 7 Font Size & Readability Analysis**: Calculates physical character height in millimeters from OCR bounding polygons using either user-calibrated dimensions (confidence: 0.95) or statistical packaging tier heuristics (confidence: 0.60). Audits compliance against Rule 7(1)-(3) Tables I & II (area-dependent minimum character heights).
+2. **Rule 8 Declaration Placement & Clear Space**: Evaluates Principal Display Panel (PDP) spatial clustering for core declarations (net quantity, MRP, manufacturer, consumer care, date) and verifies statutory clear space surrounding the net quantity numeral (1x character height vertically, 2x character height horizontally) under Rule 8(1) Proviso.
+3. **Multi-Format Statutory Report Exporter**: Produces immutable publication-grade PDF certificates via ReportLab, editable Microsoft Word (`.docx`) statutory inspection notices with officer sign-off blocks via `python-docx`, and flat tabular CSV audit records.
+4. **Hierarchical Role-Based Access Control (RBAC)**: Secure access tiering (`Admin` > `Supervisor` > `Inspector`). Enforces department-wide analytics visibility for supervisors/admins, restricts record deletion and user role management to administrators, and scopes field inspectors to their own inspections.
 
-```bash
-# Navigate to web folder
-cd web
-
-# Install dependencies
-npm install
-
-# Start Vite development server
-npm run dev
-```
-*Web App URL:* `http://localhost:5173`
-
----
-
-### 3. Mobile Application (React Native / Expo)
-
-```bash
-# Navigate to mobile folder
-cd mobile
-
-# Install dependencies
-npm install
-
-# Start Expo development server
-npx expo start
-```
-
-**Testing on Different Targets:**
-- **Android Emulator:** Press `a` in the Expo terminal (connects to `10.0.2.2:8000`).
-- **Physical Device:** Install the **Expo Go** app on your phone, ensure your phone and PC are on the same Wi-Fi, and scan the QR code.
-- **Web Browser:** Press `w` to test the mobile UI directly in your web browser.
-
----
-
-## 5. Demo Accounts & RBAC Roles
-
-SafeMetric pre-seeds three demo accounts across the role hierarchy for testing and jury demonstrations:
-
-| Role | Email | Password | Scope & Permissions |
-|:---|:---|:---|:---|
-| **Admin** | `officer@safemetric.gov.in` | `password123` | Full system access: delete inspections, manage user accounts & assign roles (`GET/PUT /api/users`), view all records & analytics. |
-| **Supervisor** | `supervisor@safemetric.gov.in` | `password123` | Department-wide analytics (`GET /api/dashboard/stats`), view all officers' inspections, cannot delete records or manage users. |
-| **Inspector** | `inspector@safemetric.gov.in` | `password123` | Field officer: upload/scan commodities, view personal inspections & stats, download reports (PDF/DOCX/CSV). |
-
-*The Web login screen features a 1-click **"Fill Demo Officer Credentials"** button.*
-
----
-
-## 6. SIH Judge Demonstration Flow (Under 3 Minutes)
-
-1. **Open SafeMetric Web** (`http://localhost:5173`).
-2. **Login as Administrator:** Click *"Fill Demo Officer Credentials"* (`officer@safemetric.gov.in`) → Click *"Login to SafeMetric"*.
-3. **Dashboard:** Review department-wide KPI metrics, compliance rate, violations breakdown, and audit activity.
-4. **Initiate Scan:** Click **`+ SCAN PRODUCT`**.
-   - Optional: Enter package dimensions (e.g., Length: `150` mm, Width: `200` mm) to enable high-confidence Rule 7 physical scale calibration.
-5. **Demonstrate Compliant Commodity:**
-   - Click **`✓ SafeRice (Compliant)`** button (or upload `sample_saferice.png`).
-   - Click **`ANALYZE PRODUCT COMPLIANCE`**.
-   - Observe the animated processing pipeline (Quality check → OpenCV preprocessing → OCR extraction → Font Analysis → Placement Check → Statutory Rules).
-   - **Result Screen:**
-     - Status: `COMPLIANT` green banner, 100% score, 0 violations.
-     - **Font Size & Label Readability (Rule 7)** card: Character height measurements in mm, Table I/II thresholds, scale method indicator.
-     - **Declaration Placement & Grouping (Rule 8)** card: Core declarations PDP cluster box, net quantity clear space verification.
-     - Interactive OCR bounding box evidence viewer.
-6. **Multi-Format Report Export:**
-   - On the Result screen, demonstrate multi-format exports:
-     - Click **`PDF`**: Downloads publication-grade certificate with stamp and signature line.
-     - Click **`Word (.docx)`**: Downloads editable statutory inspection notice with officer sign-off block.
-     - Click **`CSV`**: Downloads flat tabular audit row for spreadsheet archiving.
-7. **Demonstrate Non-Compliant Commodity:**
-   - Click **`Scan Next Commodity`** → select **`✕ Crispy Wafers (Non-Compliant)`**.
-   - Review itemized violations (Missing Consumer Care under Rule 6(1)(n), ambiguous Net Quantity "Approx 200g" under Rule 12(6), missing currency symbol under Rule 6(1)(e)).
-8. **Role-Based Access Control (RBAC) & User Management:**
-   - Navigate to **`User Management`** (`/users`) in the sidebar (visible only to Admin).
-   - Show active registered officers, change user roles dynamically between Inspector, Supervisor, and Admin.
-   - Navigate to **`History`**: Admin sees all inspections with Delete buttons. Log in as Inspector to observe scoped personal view with Delete buttons disabled.
-
----
-
-## 7. Legal Metrology Rules Implemented (21 Statutory Rules)
+### Legal Metrology Rules Implemented (21 Statutory Rules)
 
 All 21 rules are directly encoded from the Legal Metrology Act, 2009 and the Legal Metrology (Packaged Commodities) Rules, 2011 (G.S.R. 202(E)):
 
@@ -283,40 +216,210 @@ All 21 rules are directly encoded from the Legal Metrology Act, 2009 and the Leg
 | 20 | `PCR-2011-R7-FONT-SIZE-COMPLIANCE` | Rule 7(1)-(3), Tables I & II | Character/numeral height in mm relative to package surface area | HIGH |
 | 21 | `PCR-2011-R8-DECLARATION-PLACEMENT` | Rule 8(1)-(2), PCR 2011 | Grouping on Principal Display Panel; clear space around net quantity | HIGH |
 
----
+## 🔍 OCR / Computer Vision Pipeline
 
-## 8. Verification & Test Suites
+SafeMetric applies a structured pipeline to raw label images before rule evaluation:
 
-The backend includes six automated verification test suites covering statutory compliance, font geometry, spatial placement, multi-format report generation, and role security:
+- Image capture or upload from web or mobile inspection flows
+- OpenCV preprocessing for denoising, contrast adjustment, and edge refinement
+- OCR extraction for declaration fields and polygon coordinate capture
+- Normalization of values, units, and text variants
+- Rule 7 physical measurement analysis using calibrated or heuristic package dimensions
+- Rule 8 declaration placement and clear-space grouping checks
+- Final compliance determination and report generation
+
+## 👮 RBAC
+
+SafeMetric pre-seeds three demo accounts across the role hierarchy for testing and jury demonstrations:
+
+| Role | Email | Password | Scope & Permissions |
+|:---|:---|:---|:---|
+| **Admin** | `officer@safemetric.gov.in` | `password123` | Full system access: delete inspections, manage user accounts & assign roles (`GET/PUT /api/users`), view all records & analytics. |
+| **Supervisor** | `supervisor@safemetric.gov.in` | `password123` | Department-wide analytics (`GET /api/dashboard/stats`), view all officers' inspections, cannot delete records or manage users. |
+| **Inspector** | `inspector@safemetric.gov.in` | `password123` | Field officer: upload/scan commodities, view personal inspections & stats, download reports (PDF/DOCX/CSV). |
+
+*The Web login screen features a 1-click **"Fill Demo Officer Credentials"** button.*
+
+## 📄 Reporting
+
+The reporting layer exports inspection outcomes in multiple formats for evidence, review, and archival use:
+
+- PDF certificates with publication-ready formatting
+- DOCX notices for editable statutory documentation
+- CSV audit exports for spreadsheet analysis and review
+- Download access scoped through the authenticated officer workflow
+
+## 📁 Project Structure
+
+<details>
+<summary>📁 Repository structure</summary>
+
+```text
+safemetric/
+├── ARCHITECTURE.md
+├── README.md
+├── backend/
+│   ├── app/
+│   │   ├── main.py
+│   │   ├── database.py
+│   │   ├── demo_seeder.py
+│   │   ├── models/
+│   │   ├── schemas/
+│   │   ├── routers/
+│   │   ├── services/
+│   │   ├── auth/
+│   │   ├── ocr/
+│   │   ├── extraction/
+│   │   ├── rules/
+│   │   └── reports/
+│   ├── uploads/
+│   ├── reports/
+│   ├── demo_samples/
+│   ├── requirements.txt
+│   ├── test_rules_knowledge_base.py
+│   ├── test_compliance_engine.py
+│   ├── test_font_analysis.py
+│   ├── test_placement_checker.py
+│   ├── test_report_exporter.py
+│   └── test_rbac.py
+├── web/
+│   ├── src/
+│   ├── package.json
+│   └── vite.config.js
+├── mobile/
+│   ├── src/
+│   ├── App.js
+│   ├── app.json
+│   └── package.json
+└── demo_samples/
+```
+
+</details>
+
+## 🧩 Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React + Vite |
+| Backend | FastAPI |
+| Database | SQLite / SQLAlchemy |
+| OCR | Existing OCR implementation |
+| Computer Vision | OpenCV |
+| Mobile | React Native + Expo |
+| Reporting | ReportLab / python-docx / CSV |
+| Authentication | Existing JWT / bcrypt implementation |
+
+## 🔧 Setup
+
+### 1. Shared Backend (FastAPI)
 
 ```bash
 cd backend
 
-# Install test runner & client dependencies (pytest, httpx)
+python -m venv venv
+
+# Windows:
+venv\Scripts\activate
+# Linux/macOS:
+source venv/bin/activate
+
+pip install -r requirements.txt
 pip install -r requirements-dev.txt
 
-# 1. Verify 21 statutory rules in Knowledge Base
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+*Backend API Docs (Swagger):* `http://127.0.0.1:8000/docs`
+
+### 2. Web Application (React + Vite)
+
+```bash
+cd web
+npm install
+npm run dev
+```
+
+*Web App URL:* `http://localhost:5173`
+
+### 3. Mobile Application (React Native / Expo)
+
+```bash
+cd mobile
+npm install
+npx expo start
+```
+
+**Testing on Different Targets:**
+- **Android Emulator:** Press `a` in the Expo terminal.
+- **Physical Device:** Use Expo Go on the same Wi‑Fi network.
+- **Web Browser:** Press `w` to test the mobile UI in-browser.
+
+## 🧪 Verification & Test Suites
+
+The backend includes automated verification suites covering statutory evaluation, font analysis, placement checks, export generation, and RBAC validation:
+
+```bash
+cd backend
+pip install -r requirements-dev.txt
 python test_rules_knowledge_base.py
-
-# 2. Verify Compliance Engine evaluation logic
 python test_compliance_engine.py
-
-# 3. Verify Rule 7 character height & Table I/II font analysis
 python test_font_analysis.py
-
-# 4. Verify Rule 8 PDP grouping & net quantity clear space checks
 python test_placement_checker.py
-
-# 5. Verify multi-format report exporter (PDF, DOCX, CSV)
 python test_report_exporter.py
-
-# 6. Verify Role-Based Access Control (Admin / Supervisor / Inspector)
 python test_rbac.py
 ```
 
+## 🎯 SIH Judge Demo — Under 3 Minutes
+
+1. **Open SafeMetric Web** (`http://localhost:5173`).
+2. **Login as Administrator:** Click *"Fill Demo Officer Credentials"* (`officer@safemetric.gov.in`) → Click *"Login to SafeMetric"*.
+3. **Dashboard:** Review KPIs, compliance rate, violations breakdown, and recent activity.
+4. **Initiate Scan:** Click **`+ SCAN PRODUCT`** and optionally enter package dimensions.
+5. **Demonstrate Compliant Commodity:**
+   - Choose **`✓ SafeRice (Compliant)`** or upload `sample_saferice.png`.
+   - Click **`ANALYZE PRODUCT COMPLIANCE`**.
+   - Observe OCR extraction, Rule 7 analysis, Rule 8 placement check, and statutory validation.
+   - Result status should show `COMPLIANT` with zero violations.
+6. **Multi-Format Report Export:**
+   - Download PDF, DOCX, and CSV outputs from the result screen.
+7. **Demonstrate Non-Compliant Commodity:**
+   - Scan next commodity and select **`✕ Crispy Wafers (Non-Compliant)`**.
+   - Review violations such as missing consumer care, misleading net quantity text, and missing currency symbol.
+8. **Role-Based Access Control & User Management:**
+   - Navigate to **User Management** as Admin.
+   - Change roles across Inspector, Supervisor, and Admin.
+   - Compare History access and delete permissions between Admin and Inspector.
+
+## 🛣️ Future Enhancements
+
+These are planned future capabilities and are not represented as currently implemented features:
+
+- Expanded commodity coverage
+- Improved evidence visualization
+- Advanced inspection analytics
+- Enhanced mobile field workflows
+- More robust image-quality handling
+- Expanded rule coverage
+
+## ⚠️ Disclaimer
+
+> SafeMetric is a technology-assisted inspection and compliance support system. Final regulatory determinations remain subject to applicable statutory requirements and physical inspection by authorized personnel.
+
+## 👥 Team / SIH 2026
+
+**SAFE METRIC** is designed around a field-inspection workflow for packaged commodity review, with a focus on statutory declaration compliance, rule-specific evidence, and auditable reporting.
+
 ---
 
-## 9. API Reference Summary
+## 10. Known Limitations & Roadmap
+
+- **Multi-Angle Stitching:** Cylindrical packaging (bottles, cans) currently requires flat-label presentation; future releases will support panorama cylindrical unrolling.
+- **Multilingual Recognition:** Support for regional Indian official languages (Hindi, Tamil, Marathi, Bengali, Telugu) under the 8th Schedule.
+- **Central Regulatory Registry:** Integration with the National Consumer Helpline (NCH) and e-Daakhil consumer grievance portals.
+
+---
+
+## 11. API Reference Summary
 
 | Method | Endpoint | Access | Description |
 |:---|:---|:---|:---|
@@ -334,10 +437,3 @@ python test_rbac.py
 | `GET` | `/api/reports/{id}/download` | Any Officer | Downloads report with format query parameter: `?format=pdf`, `?format=docx`, or `?format=csv` |
 | `GET` | `/api/rules` | Any Officer | Catalogs all 21 statutory Legal Metrology rules with citations |
 
----
-
-## 10. Known Limitations & Roadmap
-
-- **Multi-Angle Stitching:** Cylindrical packaging (bottles, cans) currently requires flat-label presentation; future releases will support panorama cylindrical unrolling.
-- **Multilingual Recognition:** Support for regional Indian official languages (Hindi, Tamil, Marathi, Bengali, Telugu) under the 8th Schedule.
-- **Central Regulatory Registry:** Integration with the National Consumer Helpline (NCH) and e-Daakhil consumer grievance portals.
